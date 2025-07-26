@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wallet
+      POSTGRES_PASSWORD: wallet
+      POSTGRES_DB: wallet
+    ports:
+      - "5432:5432"
+  api:
+    build: .
+    environment:
+      CONFIG_PATH: /app/.env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
