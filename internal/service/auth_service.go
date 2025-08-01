@@ -8,9 +8,9 @@ import (
     "github.com/golang-jwt/jwt/v5"
     "golang.org/x/crypto/bcrypt"
 
-    "github.com/yourusername/teen-wallet-api/internal/config"
-    "github.com/yourusername/teen-wallet-api/internal/models"
-    "github.com/yourusername/teen-wallet-api/internal/repository"
+    "github.com/narwar-veer/teen-wallet-api/internal/config"
+    "github.com/narwar-veer/teen-wallet-api/internal/models"
+    "github.com/narwar-veer/teen-wallet-api/internal/repository"
 )
 
 type AuthService struct {

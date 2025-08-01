@@ -7,7 +7,6 @@ import (
     "github.com/narwar-veer/teen-wallet-api/internal/database"
     "github.com/narwar-veer/teen-wallet-api/internal/router"
 )
-
 func main() {
     cfg := config.MustLoad()
 

@@ -5,7 +5,7 @@ import (
     "strconv"
 
     "github.com/gin-gonic/gin"
-    "github.com/yourusername/teen-wallet-api/internal/service"
+    "github.com/narwar-veer/teen-wallet-api/internal/service"
 )
 
 type WalletHandler struct {
@@ -61,4 +61,15 @@ func (h *WalletHandler) Transfer(c *gin.Context) {
         return
     }
     c.Status(http.StatusNoContent)
+}
+
+// Balance returns wallet balance
+func (h *WalletHandler) Balance(c *gin.Context) {
+    uid := c.GetUint("uid")
+    bal, err := h.wallet.Balance(uid)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"balance": bal})
 }

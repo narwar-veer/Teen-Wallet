@@ -4,9 +4,10 @@ import (
     "fmt"
     "log"
 
-    "github.com/yourusername/teen-wallet-api/internal/config"
+    "github.com/narwar-veer/teen-wallet-api/internal/config"
     "gorm.io/driver/postgres"
     "gorm.io/gorm"
+    "github.com/narwar-veer/teen-wallet-api/internal/models"
 )
 
 func MustConnect(cfg *config.Config) *gorm.DB {
@@ -28,23 +29,7 @@ func MustConnect(cfg *config.Config) *gorm.DB {
 
 // AutoMigrate auto‑creates tables
 func AutoMigrate(db *gorm.DB) {
-    if err := db.AutoMigrate(&User{}, &Wallet{}, &Transaction{}); err != nil {
+    if err := db.AutoMigrate(&models.User{}, &models.Wallet{}, &models.Transaction{}); err != nil {
         log.Fatalf("auto‑migration failed: %v", err)
     }
-}
-
-================ internal/models/user.go ===================
-package models
-
-import "time"
-
-type User struct {
-    ID           uint      `gorm:"primaryKey"`
-    Name         string    `gorm:"size:100;not null"`
-    Email        string    `gorm:"size:100;uniqueIndex"`
-    Phone        string    `gorm:"size:15;uniqueIndex"`
-    PasswordHash string    `gorm:"size:255;not null"`
-    CreatedAt    time.Time
-    UpdatedAt    time.Time
-    Wallet       Wallet
 }

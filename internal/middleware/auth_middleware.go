@@ -5,7 +5,7 @@ import (
     "strings"
 
     "github.com/gin-gonic/gin"
-    "github.com/yourusername/teen-wallet-api/internal/service"
+    "github.com/narwar-veer/teen-wallet-api/internal/service"
 )
 
 func AuthMiddleware(auth *service.AuthService) gin.HandlerFunc {

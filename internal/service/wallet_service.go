@@ -3,9 +3,10 @@ package service
 import (
     "errors"
 
-    "github.com/yourusername/teen-wallet-api/internal/models"
-    "github.com/yourusername/teen-wallet-api/internal/repository"
+    "github.com/narwar-veer/teen-wallet-api/internal/models"
+    "github.com/narwar-veer/teen-wallet-api/internal/repository"
 )
+
 
 type WalletService struct {
     wallets repository.WalletRepository
@@ -69,4 +70,13 @@ func (s *WalletService) Transfer(fromUID, toUID uint, amount int64) error {
         return err
     }
     return s.txRepo.Create(&models.Transaction{WalletID: toW.ID, Amount: amount, Type: models.TransferIn, Description: "transfer from user"})
+}
+
+// Balance returns current wallet balance
+func (s *WalletService) Balance(uid uint) (int64, error) {
+    w, err := s.wallets.GetByUserID(uid)
+    if err != nil {
+        return 0, err
+    }
+    return w.Balance, nil
 }

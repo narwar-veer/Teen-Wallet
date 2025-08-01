@@ -1,7 +1,7 @@
 package repository
 
 import (
-    "github.com/yourusername/teen-wallet-api/internal/models"
+    "github.com/narwar-veer/teen-wallet-api/internal/models"
     "gorm.io/gorm"
 )
 
