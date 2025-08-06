@@ -15,17 +15,21 @@ func AuthMiddleware(auth *service.AuthService) gin.HandlerFunc {
             c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "missing auth header"})
             return
         }
+
         parts := strings.SplitN(authHeader, " ", 2)
         if len(parts) != 2 || parts[0] != "Bearer" {
-            c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid auth header"})
+            c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid auth header format"})
             return
         }
+
         claims, err := auth.ParseToken(parts[1])
         if err != nil {
             c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
             return
         }
+
         c.Set("uid", claims.UID)
+
         c.Next()
     }
 }

@@ -13,8 +13,10 @@ import (
     "github.com/narwar-veer/teen-wallet-api/internal/repository"
 )
 
+
 type AuthService struct {
     users  repository.UserRepository
+    wallets repository.WalletRepository
     jwtCfg config.JWT
     validate *validator.Validate
 }
@@ -24,8 +26,8 @@ type AuthClaims struct {
     jwt.RegisteredClaims
 }
 
-func NewAuthService(u repository.UserRepository, jwtCfg config.JWT) *AuthService {
-    return &AuthService{users: u, jwtCfg: jwtCfg, validate: validator.New()}
+func NewAuthService(u repository.UserRepository, w repository.WalletRepository, jwtCfg config.JWT) *AuthService {
+    return &AuthService{users: u, wallets: w, jwtCfg: jwtCfg, validate: validator.New()}
 }
 
 func hashPassword(pw string) (string, error) {
@@ -57,7 +59,11 @@ func (s *AuthService) Register(name, email, phone, password string) (*models.Use
     if err := s.users.Create(u); err != nil {
         return nil, err
     }
-    return u, nil
+    if err := s.wallets.Create(&models.Wallet{UserID: u.ID, Balance: 0}); err != nil {
+    return nil, err
+}
+
+return u, nil
 }
 
 func (s *AuthService) Login(email, password string) (string, error) {

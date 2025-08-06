@@ -15,7 +15,7 @@ func main() {
 
     r := router.New(cfg, db)
 
-    log.Printf("🚀  Server starting on %s", cfg.HTTPServer.Addr)
+    log.Printf("Server starting on %s", cfg.HTTPServer.Addr)
     if err := r.Run(cfg.HTTPServer.Addr); err != nil {
         log.Fatalf("unable to start server: %v", err)
     }

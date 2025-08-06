@@ -17,10 +17,11 @@ func New(cfg *config.Config, db *gorm.DB) *gin.Engine {
     // repositories
     userRepo := repository.NewUserRepository(db)
     walletRepo := repository.NewWalletRepository(db)
+     
     txRepo := repository.NewTransactionRepository(db)
 
     // services
-    authSrv := service.NewAuthService(userRepo, cfg.JWT)
+    authSrv := service.NewAuthService(userRepo, walletRepo, cfg.JWT)
     walletSrv := service.NewWalletService(walletRepo, txRepo)
 
     // handlers

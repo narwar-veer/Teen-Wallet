@@ -27,7 +27,6 @@ func MustConnect(cfg *config.Config) *gorm.DB {
     return db
 }
 
-// AutoMigrate auto‑creates tables
 func AutoMigrate(db *gorm.DB) {
     if err := db.AutoMigrate(&models.User{}, &models.Wallet{}, &models.Transaction{}); err != nil {
         log.Fatalf("auto‑migration failed: %v", err)
